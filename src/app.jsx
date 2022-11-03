@@ -17,7 +17,6 @@ const StyledApp = styled.div`
     left: 600px;
     top: 24px;
     position: absolute;
-    background: #f4f4f4;
     background-size: cover;
     z-index: 1;
 
@@ -59,19 +58,19 @@ const FieldDefaultConfig = {
     value: "",
     dragable: true,
   },
-  list: {
-    type: "list",
-    style: ".field-container {\r\n    ul {}\r\n    ol {}\r\n    li {}\r\n}",
-    pos: { x: 100, y: 100 },
-    key: "",
-    isNumberIndex: false,
-    containerClassName: "",
-    labelClassName: "",
-    listClassName: "",
-    itemClassName: "",
-    value: [],
-    dragable: true,
-  },
+  /* list: {
+   *   type: "list",
+   *   style: ".field-container {\r\n    ul {}\r\n    ol {}\r\n    li {}\r\n}",
+   *   pos: { x: 100, y: 100 },
+   *   key: "",
+   *   isNumberIndex: false,
+   *   containerClassName: "",
+   *   labelClassName: "",
+   *   listClassName: "",
+   *   itemClassName: "",
+   *   value: [],
+   *   dragable: true,
+   * }, */
   pic: {
     type: "pic",
     style:
@@ -187,6 +186,8 @@ function App() {
   };
   if (globalSettings.pic) {
     bannerStyle.backgroundImage = `url(${globalSettings.pic})`;
+  } else {
+    bannerStyle.backgroundColor = `#f4f4f4`;
   }
   return (
     <StyledApp id="app" extraStyle={globalSettings.style}>
@@ -263,28 +264,28 @@ function App() {
                     }}
                   />
                 )}
-                {item.type === "list" && (
-                  <>
+                {/* {item.type === "list" && (
+                    <>
                     {item.isNumberIndex && (
-                      <ol className={item.listClassName || ""}>
-                        {item.value.map((d) => {
-                          return (
-                            <li className={item.itemClassName || ""}>{d}</li>
-                          );
-                        })}
-                      </ol>
+                    <ol className={item.listClassName || ""}>
+                    {item.value.map((d) => {
+                    return (
+                    <li className={item.itemClassName || ""}>{d}</li>
+                    );
+                    })}
+                    </ol>
                     )}
                     {!item.isNumberIndex && (
-                      <ul className={item.listClassName || ""}>
-                        {item.value.map((d) => {
-                          return (
-                            <li className={item.itemClassName || ""}>{d}</li>
-                          );
-                        })}
-                      </ul>
+                    <ul className={item.listClassName || ""}>
+                    {item.value.map((d) => {
+                    return (
+                    <li className={item.itemClassName || ""}>{d}</li>
+                    );
+                    })}
+                    </ul>
                     )}
-                  </>
-                )}
+                    </>
+                    )} */}
                 {item.type === "custom" && (
                   <div
                     className={"container " + item.itemClassName || ""}
@@ -502,7 +503,7 @@ function App() {
                               >
                                 <option value="text">Text</option>
                                 <option value="textarea">Textarea</option>
-                                <option value="list">List</option>
+                                {/* <option value="list">List</option> */}
                                 <option value="pic">Pic</option>
                                 <option value="custom">Custom</option>
                               </select>
@@ -607,81 +608,81 @@ function App() {
                             />
                           </div>
 
-                          {item.type === "list" && (
-                            <>
+                          {/* {item.type === "list" && (
+                              <>
                               <label className="label mr-2">
-                                List class name:
+                              List class name:
                               </label>
                               <input
-                                className="input mr-2"
-                                value={item.listClassName}
-                                onChange={(e) => {
-                                  item.listClassName = e.target.value;
-                                  setSchema((prev) => {
-                                    return [...prev];
-                                  });
-                                }}
+                              className="input mr-2"
+                              value={item.listClassName}
+                              onChange={(e) => {
+                              item.listClassName = e.target.value;
+                              setSchema((prev) => {
+                              return [...prev];
+                              });
+                              }}
                               />
                               <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
+                              style={{
+                              display: "flex",
+                              alignItems: "center",
+                              }}
                               >
-                                <label className="label mb-0 mr-2">
-                                  Is number index:
-                                </label>
-                                <input
-                                  type="checkbox"
-                                  checked={item.isNumberIndex}
-                                  onChange={(e) => {
-                                    item.isNumberIndex = e.target.checked;
-                                    setSchema((prev) => {
-                                      return [...prev];
-                                    });
-                                  }}
-                                />
+                              <label className="label mb-0 mr-2">
+                              Is number index:
+                              </label>
+                              <input
+                              type="checkbox"
+                              checked={item.isNumberIndex}
+                              onChange={(e) => {
+                              item.isNumberIndex = e.target.checked;
+                              setSchema((prev) => {
+                              return [...prev];
+                              });
+                              }}
+                              />
                               </div>
                               <label className="label">Children:</label>
                               <div
-                                className="p-4"
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "4px",
-                                  height: "200px",
-                                  overflow: "auto",
-                                }}
+                              className="p-4"
+                              style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              border: "1px solid rgba(0,0,0,0.2)",
+                              borderRadius: "4px",
+                              height: "200px",
+                              overflow: "auto",
+                              }}
                               >
-                                {item.value.map((d, x) => {
-                                  return (
-                                    <input
-                                      className="input mb-2"
-                                      value={d}
-                                      onChange={(e) => {
-                                        item.value[x] = e.target.value;
-                                        setSchema((prev) => {
-                                          return [...prev];
-                                        });
-                                      }}
-                                    />
-                                  );
-                                })}
+                              {item.value.map((d, x) => {
+                              return (
+                              <input
+                              className="input mb-2"
+                              value={d}
+                              onChange={(e) => {
+                              item.value[x] = e.target.value;
+                              setSchema((prev) => {
+                              return [...prev];
+                              });
+                              }}
+                              />
+                              );
+                              })}
                               </div>
                               <button
-                                className="button mt-2"
-                                onClick={() => {
-                                  item.value.push("");
-                                  setSchema((prev) => {
-                                    return [...prev];
-                                  });
-                                }}
+                              className="button mt-2"
+                              onClick={() => {
+                              item.value.push("");
+                              setSchema((prev) => {
+                              return [...prev];
+                              });
+                              }}
                               >
-                                Add child
+                              Add child
                               </button>
-                            </>
-                          )}
+                              </>
+                              )} */}
                           {item.type === "custom" && (
                             <div className="flex items-center">
                               <div className="text-sm font-bold mr-2">
@@ -767,6 +768,7 @@ function App() {
                     className="bg-stone-300 p-2 rounded-md hover:bg-stone-500 hover:text-white mr-4 transition-all"
                     onClick={() => {
                       document.querySelector(".total-pic").style.left = 0;
+                      document.querySelector(".total-pic").style.top = 0;
                       domtoimage
                         .toPng(document.querySelector(".total-pic"))
                         .then(function (dataUrl) {
@@ -783,6 +785,8 @@ function App() {
                         .finally(() => {
                           document.querySelector(".total-pic").style.left =
                             "600px";
+                          document.querySelector(".total-pic").style.top =
+                            "24px";
                         });
                     }}
                   >
