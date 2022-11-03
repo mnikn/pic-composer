@@ -4,6 +4,16 @@ import styled, { css } from "styled-components";
 import * as monaco from "monaco-editor";
 import domtoimage from "dom-to-image";
 
+function saveJsonFile(content, fileName) {
+  const a = document.createElement("a");
+  const file = new Blob([JSON.stringify(content, null, 2)], {
+    type: "text/plain",
+  });
+  a.href = URL.createObjectURL(file);
+  a.download = fileName;
+  a.click();
+}
+
 const StyledApp = styled.div`
   position: relative;
   .sidebar {
@@ -750,10 +760,43 @@ function App() {
                         "global_settings",
                         JSON.stringify(globalSettings, null, 2)
                       );
+                      saveJsonFile(
+                        {
+                          schema: schema,
+                          global_settings: globalSettings,
+                        },
+                        "data.json"
+                      );
                     }}
                   >
                     Save
                   </button>
+                  <button
+                    className="bg-stone-300 p-2 rounded-md hover:bg-stone-500 hover:text-white mr-4 transition-all"
+                    onClick={() => {
+                      const inputDom = document.createElement("input");
+                      inputDom.type = "file";
+                      inputDom.accept = "application/JSON";
+                      inputDom.addEventListener("change", (e) => {
+                        const files = e.target.files;
+                        if (files && files.length) {
+                          const fr = new FileReader();
+                          fr.onload = () => {
+                            const data = JSON.parse(fr.result);
+                            setSchema(data.schema);
+                            setGlobalSettings(data.global_settings);
+                            document.body.removeChild(inputDom);
+                          };
+                          fr.readAsText(files[0]);
+                        }
+                      });
+                      document.body.appendChild(inputDom);
+                      inputDom.click();
+                    }}
+                  >
+                    Import
+                  </button>
+
                   <button
                     className="bg-stone-300 p-2 rounded-md hover:bg-stone-500 hover:text-white mr-4 transition-all"
                     onClick={() => {
